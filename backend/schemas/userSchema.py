@@ -10,7 +10,7 @@ class UserCreate(BaseModel):
     last_name:str=Field(min_length=3,max_length=20)
     email:EmailStr
     password:str=Field(min_length=6)
-    role:UserRole.STUDENT
+    role:UserRole.TEACHER
     
     
 
