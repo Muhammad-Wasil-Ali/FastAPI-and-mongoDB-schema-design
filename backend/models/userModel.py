@@ -1,9 +1,9 @@
 from typing import Optional
 from datetime import datetime
 from enum import Enum
-
+from pydantic import EmailStr,Field
 from beanie import Document
-from pydantic import Field
+
 
 
 class UserRole(str, Enum):
@@ -12,11 +12,11 @@ class UserRole(str, Enum):
 
 
 class User(Document):
-    email:str
-    password: str
-    role: UserRole
-    first_name: str
-    last_name: str
+    email:EmailStr
+    password: str=Field(min_length=6)
+    role: UserRole.STUDENT
+    first_name: str=Field(min_length=3,max_length=20)
+    last_name: str=Field(min_length=3,max_length=20)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
