@@ -6,17 +6,16 @@ class UserRole(str,Enum):
     TEACHER="teacher"
 
 class UserCreate(BaseModel):
-    first_name:str=Field(min_length=3,max_length=20)
-    last_name:str=Field(min_length=3,max_length=20)
-    email:EmailStr
-    password:str=Field(min_length=6)
-    role:UserRole.TEACHER
-    
-    
+    first_name: str = Field(min_length=3, max_length=20)
+    last_name: str = Field(min_length=3, max_length=20)
+    email: EmailStr
+    password: str = Field(min_length=6, max_length=72)
+    role: UserRole
 
 class UserResponse(BaseModel):
-    first_name:str
-    last_name:str
-    email:EmailStr
-    role:UserRole
-    created_at:datetime
+    id: str
+    first_name: str
+    last_name: str
+    email: EmailStr
+    role: UserRole
+    created_at: datetime

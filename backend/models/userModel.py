@@ -14,7 +14,7 @@ class UserRole(str, Enum):
 class User(Document):
     email:EmailStr
     password: str=Field(min_length=6)
-    role: UserRole.STUDENT
+    role: UserRole
     first_name: str=Field(min_length=3,max_length=20)
     last_name: str=Field(min_length=3,max_length=20)
     created_at: datetime = Field(default_factory=datetime.utcnow)
