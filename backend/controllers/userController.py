@@ -20,9 +20,9 @@ async def createUserController(body:UserCreate)->UserResponse:
     print(body.password)
     print(hashedPassword)
     user=User(email=body.email,password=hashedPassword,first_name=body.first_name,last_name=body.last_name,role=body.role)
-    print("Before saving in dayabse : ",user)
+    print("Before saving in databse : ",user)
     await user.insert()
-    print("after saving in dayabse : ",user)
+    print("after saving in database : ",user)
 
     return UserResponse(
         id=str(user.id),
