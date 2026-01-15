@@ -19,3 +19,8 @@ class UserResponse(BaseModel):
     email: EmailStr
     role: UserRole
     created_at: datetime
+
+
+class UserLogin(BaseModel):
+    email:EmailStr
+    password:str=Field(min_length=6,max_length=72)

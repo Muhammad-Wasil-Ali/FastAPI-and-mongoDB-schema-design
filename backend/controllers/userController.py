@@ -1,6 +1,6 @@
 from models.userModel import User
-from schemas.userSchema import UserCreate,UserResponse
-
+from schemas.userSchema import UserCreate,UserResponse,UserLogin
+from fastapi import status,HTTPException
 from passlib.hash import bcrypt
 
 # password_context=CryptContext(
@@ -32,3 +32,19 @@ async def createUserController(body:UserCreate)->UserResponse:
         role=user.role,
         created_at=user.created_at
     )
+    
+    
+    
+# login controller
+
+async def loginController(body:UserLogin):
+    # find user
+    user=await User.find_one(body.email==User.email)
+    
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid email or password")
+    
+    if not bcrypt.verify(body.password,user.password):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid email or password")
+    
+    return {"status":"success","message":"User created successfully","data":user}
