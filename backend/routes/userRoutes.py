@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,Response
 from schemas.userSchema import UserCreate,UserResponse,UserLogin
 from controllers.userController import createUserController,loginController
 
@@ -10,5 +10,5 @@ async def signup(user:UserCreate):
 
 
 @router.post("/login")
-async def login(user:UserLogin):
-    return await loginController(user)
+async def login(user:UserLogin,response:Response):
+    return await loginController(user,response)
