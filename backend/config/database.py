@@ -2,6 +2,7 @@ from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from fastapi import FastAPI
 from models.userModel import User
+from models.courseModel import Course
 import os
 from dotenv import load_dotenv
 
@@ -21,7 +22,7 @@ async def connectDB():
         
        await init_beanie(
             database=client[dbName],
-            document_models=[User]
+            document_models=[User,Course]
             )
        print("Mongo db connected successfully")
     except Exception as e:
