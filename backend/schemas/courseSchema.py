@@ -18,7 +18,7 @@ class CourseResponse(BaseModel):
 
 
 class CourseListResponse(BaseModel):
-    """Response model for list of courses with pagination info"""
+  
     courses: List[CourseResponse]
     total: int = Field(description="Total number of courses")
     skip: int = Field(description="Number of courses skipped")
