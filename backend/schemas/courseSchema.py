@@ -26,3 +26,25 @@ class CourseListResponse(BaseModel):
     
     class Config:
         from_attributes = True
+    
+    
+class CourseUpdateResponse(BaseModel):
+    """Response after updating a course"""
+    id: str
+    title: str
+    description: str
+    thumbnail: str
+    teacher_id: str
+    created_at: datetime
+   
+    
+    class Config:
+        from_attributes = True
+        
+
+
+class DeleteCourseResponse(BaseModel):
+    """Response after deleting a course"""
+    message: str
+    deleted_course_id: str
+    deleted_course_title: str

@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, Form, File, UploadFile, HTTPException
-from schemas.courseSchema import CourseResponse
-from controllers.courseController import createCourseController,getAllCoursesController
+from fastapi import APIRouter, Depends, Form, File, UploadFile, HTTPException,Query,Path
+from schemas.courseSchema import CourseResponse,CourseUpdateResponse,DeleteCourseResponse
+from controllers.courseController import createCourseController,getAllCoursesController,updateCourseController,deleteCourseController
 from dependencies.auth import require_teacher
-from typing import List
+from typing import List,Optional
 router = APIRouter(prefix="/api/v1/course", tags=["Course"])
 
 @router.post("/create", response_model=CourseResponse, status_code=201)
@@ -96,3 +96,75 @@ async def get_all_courses(
     except Exception as e:
         print(f"Error fetching courses: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to fetch courses")
+    
+    
+    
+
+
+@router.put("/{course_id}", response_model=CourseUpdateResponse)
+async def update_course(
+    course_id: str = Path(..., description="Course ID"),
+    title: Optional[str] = Form(None),
+    description: Optional[str] = Form(None),
+    thumbnail: Optional[UploadFile] = File(None),
+    current_user = Depends(require_teacher)
+):
+    """
+    Update a course
+    - Only course owner can update
+    - All fields are optional
+    """
+    
+    # Check if at least one field is provided
+    if not title and not description and not thumbnail:
+        raise HTTPException(
+            status_code=400,
+            detail="Provide at least one field to update"
+        )
+    
+    try:
+        updated_course = await updateCourseController(
+            course_id=course_id,
+            title=title,
+            description=description,
+            thumbnail=thumbnail,
+            current_user_id=str(current_user['id'])
+        )
+        return updated_course
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to update course"
+        )
+        
+        
+@router.delete("/{course_id}", response_model=DeleteCourseResponse, status_code=200)
+async def delete_course(
+    course_id: str = Path(..., description="Course ID to delete"),
+    current_user = Depends(require_teacher)
+):
+    """
+    Delete a course
+    - Only course owner can delete
+    - Also deletes thumbnail from Cloudinary
+    """
+    
+    try:
+        result = await deleteCourseController(
+            course_id=course_id,
+            current_user_id=str(current_user['id'])
+        )
+        return result
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to delete course"
+        )
