@@ -14,7 +14,7 @@ async def create_course(
 ):
     """
     Create a new course with thumbnail upload
-    - Requires teacher authentication
+    - Require teacher authentication
     - Uploads thumbnail to Cloudinary
     - Saves course to MongoDB
     """
