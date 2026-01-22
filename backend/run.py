@@ -4,6 +4,8 @@ from config.database import connectDB  # your DB connection function
 
 from routes.userRoutes import router as user_router
 from routes.courseRoutes import router as course_router
+from routes.lessonRoutes import router as lesson_router
+
 from utils.cloudinary import configure_cloudinary
 
 # Configure Cloudinary when app starts
@@ -27,4 +29,6 @@ async def root():
 # Include routers (like Express routes) when ready
 app.include_router(user_router)
 app.include_router(course_router)
+app.include_router(lesson_router)
+
 # app.include_router(task_router)
