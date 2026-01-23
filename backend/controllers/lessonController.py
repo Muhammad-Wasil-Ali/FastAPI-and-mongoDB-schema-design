@@ -63,9 +63,7 @@ async def createLessonController(course_id: str, video: UploadFile, teacher_id: 
                 status_code=500,
                 detail=f"Failed to upload video to Cloudinary: {str(e)}"
             )
-        print("file name ",unique_filename)
-        print("file url ",cloudinary_url)
-        print("file id ",course)
+       
         
         # Create lesson in database
         lesson = Lesson(
@@ -73,13 +71,9 @@ async def createLessonController(course_id: str, video: UploadFile, teacher_id: 
             video_name=unique_filename,
             video_url=cloudinary_url
         )
-        print("file name ",unique_filename)
-        print("file url ",cloudinary_url)
-        print("file id ",course.id)
+       
         await lesson.insert()
-        print("file name ",unique_filename)
-        print("file url ",cloudinary_url)
-        print("file id ",course.id)
+       
         return {
             "id": str(lesson.id),
             "course_id": str(lesson.course_id.ref.id),
