@@ -119,7 +119,7 @@ async def getAllLessonsController(course_id: str, skip: int = 0, limit: int = 10
             {"course_id.$id": PydanticObjectId(course_id)}
         ).skip(skip).limit(limit).to_list()
         
-        print(f"Found {len(lessons)} lessons")
+        print(f"Found {len(lessons)} lesson")
        
         
         # Debug: Print all lessons in database
