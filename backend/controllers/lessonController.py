@@ -85,7 +85,7 @@ async def createLessonController(course_id: str, video: UploadFile, teacher_id: 
     except HTTPException:
         raise
     except Exception as e:
-        print(f"Error in createLessonController: {str(e)}")
+        print(f"Error in creatLessonController: {str(e)}")
         print(traceback.format_exc())  # This prints full error traceback
         raise HTTPException(status_code=500, detail="Failed to create lesson")
 
